@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     // Show/hide the loading image
     var Loader = {
-        _$el: null,
+        _$el: $('#loader'),
         show: function() {
             this._$el.siblings('div').hide();
             this._$el.show();
