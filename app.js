@@ -45,16 +45,17 @@ server.listen(app.get('port'), function () {
     console.log('Pirate TV is running on port ' + app.get('port'));
 });
 
-var ss;
+var ss, currentShell;
 
 //Run and pipe shell script output
-function run_shell(cmd, args, cb, end) {
+function runShell(cmd, args, cb, end) {
     var child = spawn(cmd, args),
         me = this;
     child.stdout.on('data', function (buffer) {
         cb(me, buffer);
     });
     child.stdout.on('end', end);
+    return child;
 }
 
 //Socket.io Server
@@ -99,10 +100,14 @@ io.sockets.on('connection', function (socket) {
             var id = data.video_id,
                 url = "http://www.youtube.com/watch?v=" + id;
 
-            var runShell = new run_shell('youtube-dl', ['-o', '%(id)s.%(ext)s', '-f', '/18/22', url],
+            if (currentShell) {
+                currentShell.kill();
+            }
+
+            currentShell = new runShell('youtube-dl', ['-o', '%(id)s.%(ext)s', '-f', '/18/22', url],
                 function (me, buffer) {
                     me.stdout += buffer.toString();
-                    ss.emit("loading", {output: me.stdout});
+                    socket.emit("loading", {output: me.stdout});
                     console.log(me.stdout);
                 },
                 function () {

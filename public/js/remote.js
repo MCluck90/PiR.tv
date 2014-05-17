@@ -40,7 +40,6 @@ socket.on('connect', function (data) {
                 $(".watch").on("click", function () {
                     var video_id = $(this).data('id');
                     socket.emit('video', {action: "play", video_id: video_id});
-                    $(this).disable();
                 });
             });
 
