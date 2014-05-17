@@ -101,7 +101,13 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
+    var loadingVideo = false;
     socket.on('video', function(data) {
+        if (loadingVideo) {
+            return;
+        }
+
+        loadingVideo = true;
         var id = data.video_id,
             url = 'http://www.youtube.com/watch?v=' + id;
         new runShell('youtube-dl', ['-o','%(id)s.%(ext)s','-f','/18/22',url],
@@ -113,8 +119,8 @@ io.sockets.on('connection', function (socket) {
                 console.log(output);
             },
             function() {
-                omx.quit();
                 omx.start(id + '.mp4');
+                loadingVideo = false;
             }
         );
     });
