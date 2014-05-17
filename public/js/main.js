@@ -23,6 +23,7 @@ $(document).ready(function() {
         init: function() {
             Loader.show();
             var self = this,
+                key = 'c9d417b22edc92cf',
                 url = 'http://api.wunderground.com/api/' + key +
                       '/forecast10day/q/US/Orem.json';
             $.ajax({
