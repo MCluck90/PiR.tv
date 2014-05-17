@@ -95,24 +95,34 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
+    function startVideo(url) {
+        currentShell = new runShell('youtube-dl', ['-o', '%(id)s.%(ext)s', '-f', '/18/22', url],
+            function (me, buffer) {
+                me.stdout += buffer.toString();
+                socket.emit("loading", {output: me.stdout});
+                console.log(me.stdout);
+            },
+            function () {
+                omx.start(id + '.mp4');
+            }
+        );
+    }
+
     socket.on("video", function (data) {
         if (data.action === "play") {
             var id = data.video_id,
                 url = "http://www.youtube.com/watch?v=" + id;
 
             if (currentShell) {
-                currentShell.kill();
+                currentShell.on('disconnect', function() {
+                    startVideo(url);
+                });
+                currentShell.disconnect();
+            } else {
+                startVideo(url);
             }
 
-            currentShell = new runShell('youtube-dl', ['-o', '%(id)s.%(ext)s', '-f', '/18/22', url],
-                function (me, buffer) {
-                    me.stdout += buffer.toString();
-                    socket.emit("loading", {output: me.stdout});
-                    console.log(me.stdout);
-                },
-                function () {
-                    omx.start(id + '.mp4');
-                });
+
         }
 
     });

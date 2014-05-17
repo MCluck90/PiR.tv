@@ -61,11 +61,15 @@ socket.on('connect', function (data) {
             console.log(data);
         });
     });
-    $$(".app-body").tap(function () {
-        $.get(host + '/omx/pause', function (data) {
-            console.log(data);
+    $$(".app-body")
+        .tap(function () {
+            $.get(host + '/omx/pause', function (data) {
+                console.log(data);
+            });
+        })
+        .children().tap(function() {
+            return false;
         });
-    });
     $(".search input").change(function () {
         Youtube.getVideo($(this).val(), socket);
     });
