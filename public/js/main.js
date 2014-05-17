@@ -236,6 +236,7 @@ $(document).ready(function() {
     };
 
     // Initialze the site
+    Loader.hide();
     Weather.init();
     Clock.start();
     $('.logo').html($('#rpi-svg').html());
