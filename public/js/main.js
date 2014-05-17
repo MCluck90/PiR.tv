@@ -238,6 +238,5 @@ $(document).ready(function() {
     // Initialze the site
     Weather.init();
     Clock.start();
-    Loader._$el = $('#loader');
     $('.logo').html($('#rpi-svg').html());
 });
