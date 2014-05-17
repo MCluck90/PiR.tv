@@ -21,7 +21,6 @@ $(document).ready(function() {
          * Initialize the weather
          */
         init: function() {
-            Loader.show();
             var self = this,
                 url = 'http://api.wunderground.com/api/' + key +
                       '/forecast10day/q/US/Orem.json';
@@ -32,8 +31,6 @@ $(document).ready(function() {
                     callback: '?'
                 },
                 success: function(data) {
-                    Loader.hide();
-
                     var forecast = data.forecast.simpleforecast.forecastday;
                     for (var i = 0, len = forecast.length; i < len && i < 7; i++) {
                         var item = forecast[i],
