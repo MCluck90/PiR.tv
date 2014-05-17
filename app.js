@@ -113,6 +113,7 @@ io.sockets.on('connection', function (socket) {
                 console.log(output);
             },
             function() {
+                omx.quit();
                 omx.start(id + '.mp4');
             }
         );
