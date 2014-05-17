@@ -22,8 +22,7 @@
                 data: {
                     vq: query,
                     'max-results': MAX_VIDEOS,
-                    alt: 'json-in-script',
-                    callback: '?'
+                    alt: 'json-in-script'
                 },
                 success: function(data) {
                     // Clear the previous search results
