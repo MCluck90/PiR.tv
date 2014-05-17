@@ -2,7 +2,7 @@
     // Elements/HTML
     var $videoList = $('ul.video'),
         $container = $$('.r-container'),
-        $appBody = $('.app-body'),
+        $appBody = $$('.app-body'),
         templateHTML = $('#videoTpl').html();
 
     var host = document.location.origin,
