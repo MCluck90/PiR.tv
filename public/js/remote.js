@@ -17,13 +17,9 @@
             var MAX_VIDEOS = 12;
 
             $.ajax({
-                url: 'http://gdata.youtube.com/feeds/api/videos',
-                type: 'GET',
-                data: {
-                    vq: query,
-                    'max-results': MAX_VIDEOS,
-                    alt: 'json-in-script'
-                },
+                url: "http://gdata.youtube.com/feeds/api/videos?vq=" + query +
+                     "&max-results=" + MAX_VIDEOS +
+                     "&alt=json-in-script&callback=?",
                 success: function(data) {
                     // Clear the previous search results
                     $videoList.html('');
